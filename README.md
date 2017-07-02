@@ -11,8 +11,8 @@
 
 ## 普通模式：
 
-   wget -N --no-check-certificate https://raw.githubusercontent.com/wn789/vpsxn/master/test_wn789.sh && bash test_wn789.sh
-
+    wget -N --no-check-certificate https://raw.githubusercontent.com/wn789/vpsxn/master/test_wn789.sh && bash test_wn789.sh
+    
 普通模式就是之前的测试常规内容。测试输出结果请参考：普通模式结果样式参考
 
 ## 简单模式：
