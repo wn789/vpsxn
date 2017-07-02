@@ -2,9 +2,9 @@
 PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin
 export PATH
 
-echo "服务器提供商（host provider）[default:Enter]"
+echo "欢迎使用一键VPS性能检测，继续请按回车！[default:Enter]"
 read hostp
-echo "开始测试中，会需要点时间，请稍后"
+echo "开始测试，如果服务器带宽比较低可能会需要较长点时间，请耐心等待！"
 #===============================以下是各类要用到的函数========================================
 #teddey的besh测试网络下载和IO用到的
 get_opsy() {
@@ -35,17 +35,17 @@ speed_test() {
 
 
 speed() {
-    speed_test 'http://cachefly.cachefly.net/100mb.test' 'CacheFly'
-    speed_test 'http://speedtest.tokyo.linode.com/100MB-tokyo.bin' 'Linode, Tokyo, JP'
-    speed_test 'http://speedtest.singapore.linode.com/100MB-singapore.bin' 'Linode, Singapore, SG'
-    speed_test 'http://speedtest.london.linode.com/100MB-london.bin' 'Linode, London, UK'
-    speed_test 'http://speedtest.frankfurt.linode.com/100MB-frankfurt.bin' 'Linode, Frankfurt, DE'
-    speed_test 'http://speedtest.fremont.linode.com/100MB-fremont.bin' 'Linode, Fremont, CA'
-    speed_test 'http://speedtest.dal05.softlayer.com/downloads/test100.zip' 'Softlayer, Dallas, TX'
-    speed_test 'http://speedtest.sea01.softlayer.com/downloads/test100.zip' 'Softlayer, Seattle, WA'
-    speed_test 'http://speedtest.fra02.softlayer.com/downloads/test100.zip' 'Softlayer, Frankfurt, DE'
-    speed_test 'http://speedtest.sng01.softlayer.com/downloads/test100.zip' 'Softlayer, Singapore, SG'
-    speed_test 'http://speedtest.hkg02.softlayer.com/downloads/test100.zip' 'Softlayer, HongKong, CN'
+    speed_test 'http://cachefly.cachefly.net/100mb.test' 'CacheFly CND'
+    speed_test 'http://speedtest.tokyo.linode.com/100MB-tokyo.bin' 'Linode, 东京, 日本'
+    speed_test 'http://speedtest.singapore.linode.com/100MB-singapore.bin' 'Linode, 新加坡'
+    speed_test 'http://speedtest.london.linode.com/100MB-london.bin' 'Linode, 伦敦, 英国'
+    speed_test 'http://speedtest.frankfurt.linode.com/100MB-frankfurt.bin' 'Linode, 法兰克福, 德国'
+    speed_test 'http://speedtest.fremont.linode.com/100MB-fremont.bin' 'Linode, 弗里蒙特, 美国'
+    speed_test 'http://speedtest.dal05.softlayer.com/downloads/test100.zip' 'Softlayer, 达拉斯, 美国'
+    speed_test 'http://speedtest.sea01.softlayer.com/downloads/test100.zip' 'Softlayer, 西雅图, 美国'
+    speed_test 'http://speedtest.fra02.softlayer.com/downloads/test100.zip' 'Softlayer, 法兰克福, 德国'
+    speed_test 'http://speedtest.sng01.softlayer.com/downloads/test100.zip' 'Softlayer, 新加坡'
+    speed_test 'http://speedtest.hkg02.softlayer.com/downloads/test100.zip' 'Softlayer, 香港, 中国'
 }
 
 
@@ -147,7 +147,7 @@ prewget()
 		IPaddr=$(curl -s ip.cn | awk -F '：' '{print $3}')	
 	fi
 	backtime=`date +%Y%m%d`
-	logfilename="test91yun.log"
+	logfilename="testwn789.log"
 
 }
 #查看虚拟化技术
@@ -161,7 +161,7 @@ virt()
 	fi
 	
 	#查看虚拟化技术：
-	# wget http://people.redhat.com/~rjones/virt-what/files/virt-what-1.12.tar.gz
+	# wget http://gongju.wn789.com/virt-what-1.12.tar.gz
 	# tar zxvf virt-what-1.12.tar.gz
 	# cd virt-what-1.12/
 	# ./configure
@@ -181,22 +181,23 @@ systeminfo()
 
 	#把系统信息写入日志文件
 	echo "===系统基本信息===" | tee -a $logfilename
-	echo "CPU:$cname" | tee -a $logfilename
-	echo "cores:$cores" | tee -a $logfilename
-	echo "freq:$freq" | tee -a $logfilename
-	echo "ram:$tram" | tee -a $logfilename
-	echo "swap:$swap" | tee -a $logfilename
-	echo "uptime:$up" | tee -a $logfilename
-	echo "OS:$opsy" | tee -a $logfilename
-	echo "Arch:$arch ($lbit Bit)" | tee -a $logfilename
-	echo "Kernel:$kern" | tee -a $logfilename
-	echo "ip:$IP" | tee -a $logfilename
-	echo "ipaddr:$IPaddr" | tee -a $logfilename
+	echo "CPU 型号:$cname" | tee -a $logfilename
+	echo "CPU 核数:$cores" | tee -a $logfilename
+	echo "CPU 频率:$freq" | tee -a $logfilename
+	echo "内存大小:$tram" | tee -a $logfilename
+	echo "swap分区:$swap" | tee -a $logfilename
+	echo "运行时间:$up" | tee -a $logfilename
+	echo "运行系统:$opsy" | tee -a $logfilename
+	echo "系统位数:$arch ($lbit Bit)" | tee -a $logfilename
+	echo "内核版本:$kern" | tee -a $logfilename
+	echo "服务器ip:$IP" | tee -a $logfilename
+	echo "机房位置:$IPaddr" | tee -a $logfilename
 	echo "host:$hostp" | tee -a $logfilename
-	echo "uptime:$up" | tee -a $logfilename
-	echo "vm:$vm" | tee -a $logfilename
+	echo "开机时间:$up" | tee -a $logfilename
+	echo "虚拟技术:$vm" | tee -a $logfilename
 	echo "he:$he" | tee -a $logfilename
 	echo -e "\n\n" | tee -a $logfilename
+
 
 }
 
@@ -211,7 +212,7 @@ bdtest()
 		apt-get -y install python
 	fi
 	echo "===开始测试带宽===" | tee -a $logfilename
-	wget --no-check-certificate https://raw.githubusercontent.com/91yun/speedtest-cli/master/speedtest_cli.py 1>/dev/null 2>&1
+	wget --no-check-certificate https://raw.githubusercontent.com/wn789/speedtest/master/speedtest_cli.py 1>/dev/null 2>&1
 	python speedtest_cli.py --share | tee -a $logfilename
 	echo -e "===带宽测试结束==\n\n" | tee -a $logfilename
 	rm -rf speedtest_cli.py
@@ -253,7 +254,7 @@ iotest()
 	echo "I/O speed(1st run) : $io1" | tee -a $logfilename
 	echo "I/O speed(2nd run) : $io2" | tee -a $logfilename
 	echo "I/O speed(3rd run) : $io3" | tee -a $logfilename
-	echo "Average I/O: $ioavg MB/s" | tee -a $logfilename
+	echo "I/O 平均值: $ioavg MB/s" | tee -a $logfilename
 	echo ""
 }
 
@@ -337,12 +338,6 @@ benchtest()
 }
 
 
-#上传文件
-updatefile()
-{
-	resultstr=$(curl -s -T $logfilename "https://test.91yun.org/logfileupload.php")
-	echo -e $resultstr | tee -a $logfilename
-}
 
 simple_test()
 {
