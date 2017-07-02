@@ -32,9 +32,9 @@ next() {
 }
 
 
-echo "服务器提供商（host provider）[default:Enter]"
+echo "欢迎使用一键VPS性能检测，继续请按回车！[default:Enter]"
 read hostp
-echo "开始测试中，会需要点时间，请稍后"
+echo "开始测试，如果服务器带宽比较低可能会需要较长点时间，请耐心等待！"
 
 
 _included_benchmarks=""
@@ -72,14 +72,14 @@ fi
 
 #要用到的变量
 backtime=`date +%Y%m%d`
-logfilename="test91yun.log"
+logfilename="testwn789.log"
 dir=`pwd`
 IP=$(curl -s myip.ipip.net | awk -F ' ' '{print $2}' | awk -F '：' '{print $2}')
 echo "====开始记录测试信息====">${dir}/$logfilename
 
 #创建测试目录
-mkdir -p 91yuntest
-cd 91yuntest
+mkdir -p wn789test
+cd wn789test
 
 clear
 
@@ -89,20 +89,10 @@ arr=(${_included_benchmarks//,/ })
 #下载执行相应的代码
 for i in ${arr[@]}    
 do 
-	wget -q --no-check-certificate https://raw.githubusercontent.com/91yun/91yuntest/test/test_code/${i}.sh
-    . ${dir}/91yuntest/${i}.sh
+	wget -q --no-check-certificate https://raw.githubusercontent.com/wn789/vpsxn/test/test_code/${i}.sh
+    . ${dir}/vpsxn/${i}.sh
 	eval ${i}
 done    
 
-
-#上传文件
-updatefile()
-{
-	resultstr=$(curl -s -T ${dir}/$logfilename "https://test.91yun.org/logfileupload.php")
-	echo -e $resultstr | tee -a ${dir}/$logfilename
-}
-updatefile
-
 #删除目录
-rm -rf ${dir}/91yuntest
-
+rm -rf ${dir}/wn789test
