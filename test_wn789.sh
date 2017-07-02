@@ -176,7 +176,7 @@ bdtest()
 	wget --no-check-certificate https://raw.githubusercontent.com/wn789/speedtest-cli/master/speedtest.py 1>/dev/null 2>&1
 	python speedtest.py --share | tee -a $logfilename
 	echo -e "===带宽测试结束==\n\n" | tee -a $logfilename
-	rm -rf speedtest_cli.py
+	rm -rf speedtest.py
 }
 
 
