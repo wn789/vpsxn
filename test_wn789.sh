@@ -56,38 +56,12 @@ io_test() {
 
 #=================以下是我自己写的网络mtr和ping用到的函数==============================
 
-#测试来路路由
-mtrgo(){
-	mtrurl=$1
-	nodename=$2
-	echo "===测试 [$nodename] 到这台服务器的路由===" | tee -a $logfilename
-	mtrgostr=$(curl -s "$mtrurl")
-	#echo $mtrgostr >> $logfilename
-	echo $mtrgostr > mtrlog.log
-	mtrgostrback=$(curl -s -d @mtrlog.log "https://test.91yun.org/traceroute.php")
-	rm -rf mtrlog.log
-	echo -e $mtrgostrback | awk -F '^' '{printf("%-2s\t%-16s\t%-35s\t%-30s\t%-25s\n",$1,$2,$3,$4,$5)}' | tee -a $logfilename
-	echo -e "=== [$nodename] 路由测试结束===\n\n" | tee -a $logfilename	
-}
-
-#测试回程路由
-mtrback(){
-	echo "===测试 [$2] 的回程路由===" | tee -a $logfilename
-	mtr -r -c 10 $1 | tee -a $logfilename
-	echo -e "===回程 [$2] 路由测试结束===\n\n" | tee -a $logfilename	
-
-}
-
 #测试全国ping值
 ping_test(){
 	echo "===开始进行全国PING测试===" | tee -a $logfilename
 	pingurl="http://www.ipip.net/ping.php?a=send&host=$1&area%5B%5D=china"
 	pingstr=$(curl -s "$pingurl")
 	#echo $pingstr >> $logfilename
-	echo $pingstr > pingstr.log
-	pingstrback_all=$(curl -s -d @pingstr.log "https://test.91yun.org/ping.php?ping")
-	pingstrback=$(curl -s -d @pingstr.log "https://test.91yun.org/ping.php")
-	rm -rf pingstr.log
 	echo "===all ping start===" >> $logfilename
 	echo -e $pingstrback_all | awk -F '^' '{printf("%-3s\t%-30s\t%-15s\t%-20s\t%-3s\t%-7s\t%-7s\t%-7s\t%-3s\n",$1,$2,$3,$4,$5,$6,$7,$8,$9)}' >> $logfilename	
 	echo -e "===all ping end===\n\n" >> $logfilename
@@ -97,19 +71,6 @@ ping_test(){
 	echo "===进行全国PING测试结束===" | tee -a $logfilename
 	
 }
-
-#测试跳板ping
-#参数1,ping的地址
-#参数2,描述
-testping()
-{
-	echo "{start testing $2 ping}" | tee -a $logfilename
-	ping -c 10 $1 | tee -a $logfilename
-	echo "{end testing}" | tee -a $logfilename
-}
-#==========================自用函数结束========================================
-
-
 
 #安装需要的依赖库
 prewget()
@@ -258,50 +219,11 @@ iotest()
 	echo ""
 }
 
-
-#开始测试来的路由
-tracetest()
-{
-	mtrgo "http://www.ipip.net/traceroute.php?as=1&a=get&n=1&id=274&ip=$IP" "广州电信（天翼云）"
-	mtrgo "http://www.ipip.net/traceroute.php?as=1&a=get&n=1&id=100&ip=$IP" "上海电信（天翼云）"
-	mtrgo "http://www.ipip.net/traceroute.php?as=1&a=get&n=1&id=20&ip=$IP" "厦门电信CN2"
-	mtrgo "http://www.ipip.net/traceroute.php?as=1&a=get&n=1&id=12&ip=$IP" "重庆联通"
-	mtrgo "http://www.ipip.net/traceroute.php?as=1&a=get&n=1&id=356&ip=$IP" "上海移动"
-	mtrgo "http://www.ipip.net/traceroute.php?as=1&a=get&n=1&id=160&ip=$IP" "北京教育网"
-}
-
-
-#开始测试回程路由
-backtracetest()
-{
-	mtrback "14.215.116.1" "广州电信（天翼云）"
-	mtrback "101.227.255.45" "上海电信（天翼云）"
-	mtrback "117.28.254.129" "厦门电信CN2"
-	mtrback "113.207.32.65" "重庆联通"
-	mtrback "183.192.160.3" "上海移动"
-	mtrback "202.205.6.30" "北京教育网"
-}
-
-
 #开始进行PING测试
 pingtest()
 {
 	ping_test $IP
 }
-
-
-#开始测试跳板ping
-gotoping()
-{
-	echo "===开始测试跳板ping===" | tee -a $logfilename
-	testping speedtest.tokyo.linode.com Linode日本
-	testping hnd-jp-ping.vultr.com Vultr日本
-	testping 192.157.214.6 Budgetvm洛杉矶
-	testping downloadtest.kdatacenter.com kdatacenter韩国SK
-	testping 210.92.18.1 星光韩国KT
-	echo "===跳板ping测试结束===" | tee -a $logfilename
-}
-
 
 benchtest()
 {
@@ -346,7 +268,7 @@ simple_test()
 	bdtest
 	iotest
 	pingtest
-	updatefile
+	#updatefile
 }
 
 normal_test()
@@ -357,11 +279,11 @@ normal_test()
 	bdtest
 	dltest
 	iotest
-	tracetest
-	backtracetest
+    #tracetest
+	#backtracetest
 	pingtest
-	gotoping
-	updatefile
+	#gotoping
+	#updatefile
 	
 }
 
@@ -373,12 +295,12 @@ all_test()
 	bdtest
 	dltest
 	iotest
-	tracetest
-	backtracetest
+	#tracetest
+	#backtracetest
 	pingtest
-	gotoping
+	#gotoping
 	benchtest
-	updatefile
+	#updatefile
 	
 }
 
