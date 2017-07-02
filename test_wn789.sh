@@ -173,8 +173,8 @@ bdtest()
 		apt-get -y install python
 	fi
 	echo "===开始测试带宽===" | tee -a $logfilename
-	wget --no-check-certificate https://raw.githubusercontent.com/wn789/speedtest-cli/master/speedtest_cli.py 1>/dev/null 2>&1
-	python speedtest_cli.py --share | tee -a $logfilename
+	wget --no-check-certificate https://raw.githubusercontent.com/wn789/speedtest-cli/master/speedtest.py 1>/dev/null 2>&1
+	python speedtest.py --share | tee -a $logfilename
 	echo -e "===带宽测试结束==\n\n" | tee -a $logfilename
 	rm -rf speedtest_cli.py
 }
